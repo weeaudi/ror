@@ -1,0 +1,8 @@
+<% @servers.each do |server| %>
+<pre><code class="json"><%= JSON.pretty_generate(server['attributes']) %></code></pre>
+<% server = server['attributes'] %>
+<h1><%= server['name'] %></h1>
+<h4><%= server['description'] %></h4>
+<p>id: <%= server['id'] %></p>
+
+<% end %>

@@ -1,0 +1,9 @@
+{"event":"auth","args":["eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImp0aSI6IjZiMmYwNjgzZjg5MzYyZTg0MDhmNjc1YTljZmJjMTFjIn0.eyJpc3MiOiJodHRwczovL3BhbmVsLmluZmxhbWVzY3JhZnQuY29tIiwiYXVkIjpbImh0dHBzOi8vYm9uc2FpLmluZmxhbWVzLmNjOjQ0MyJdLCJqdGkiOiI2YjJmMDY4M2Y4OTM2MmU4NDA4ZjY3NWE5Y2ZiYzExYyIsImlhdCI6MTcxNjU2NTI0OSwibmJmIjoxNzE2NTY0OTQ5LCJleHAiOjE3MTY1NjU4NDksInNlcnZlcl91dWlkIjoiZmRhZjBhMDAtNDVlZS00YzQwLTg4ZDctZjM5YjUwODlhOGY4IiwicGVybWlzc2lvbnMiOlsiKiIsImFkbWluLndlYnNvY2tldC5lcnJvcnMiLCJhZG1pbi53ZWJzb2NrZXQuaW5zdGFsbCIsImFkbWluLndlYnNvY2tldC50cmFuc2ZlciJdLCJ1c2VyX3V1aWQiOiJlZmZkOGMxMS05YjI0LTQzYzUtODgwNi1kYzlmYjExY2I3ZjMiLCJ1c2VyX2lkIjoyLCJ1bmlxdWVfaWQiOiI3VjlmM0M4aWs5R0ZWVFc5In0.vjvcGukrFXOI7MDi5OL8aFyZT_mB1m31WruJZFwKafw"]}
+
+
+{"event":"send logs","args":[]}
+
+{"event":"send command","args":["list"]}
+
+
+{"event":"set state","args":["kill"]}

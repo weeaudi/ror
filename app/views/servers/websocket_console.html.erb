@@ -1,0 +1,109 @@
+<!-- app/views/servers/websocket_console.html.erb -->
+<%= javascript_include_tag 'channels', 'data-turbolinks-track': 'reload' %>
+<head>
+  <title>Server Console</title>
+  <meta name="csrf-token" content="<%= form_authenticity_token %>">
+  <style>
+    #console_output {
+      border: 1px solid #ccc;
+      padding: 10px;
+      height: 400px;
+      overflow-y: scroll;
+      background-color: #000;
+      color: #0f0;
+      font-family: monospace;
+    }
+    #console {
+      border: 1px solid #ccc;
+      padding: 10px;
+      height: 200px;
+      overflow-y: scroll;
+      background-color: #f0f0f0;
+      font-family: monospace;
+      margin-top: 10px;
+    }
+    #command_form {
+      margin-top: 10px;
+    }
+    .charts-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    .chart {
+      flex: 1;
+      margin-right: 10px;
+    }
+    .chart:last-child {
+      margin-right: 0;
+    }
+    canvas {
+      width: 100% !important;
+      height: 300px !important;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <h1>Server Console for <%= @server_id %></h1>
+  <div id="console_output">
+    <!-- Console output will be appended here -->
+  </div>
+  <div id="console">
+    <!-- JavaScript console will be appended here -->
+  </div>
+
+  <form id="command_form">
+    <input type="text" id="command_input" placeholder="Enter command...">
+    <button type="submit">Send Command</button>
+  </form>
+
+  <!-- Add canvas elements for charts -->
+  <div class="charts-container">
+    <div class="chart">
+      <h2>CPU Usage</h2>
+      <canvas id="cpuChart"></canvas>
+    </div>
+    <div class="chart">
+      <h2>Memory Usage</h2>
+      <canvas id="memoryChart"></canvas>
+    </div>
+  </div>
+
+  <script>
+    var oldLog = console.log;
+      console.log = function(message) {
+        var consoleDiv = document.getElementById('console');
+        var line = document.createElement('div');
+        line.textContent = message;
+        consoleDiv.appendChild(line);
+        consoleDiv.scrollTop = consoleDiv.scrollHeight;
+        oldLog.apply(console, arguments);
+      };
+      var oldWarn = console.warn;
+      console.warn = function(message) {
+        var consoleDiv = document.getElementById('console');
+        var line = document.createElement('div');
+        line.textContent = message;
+        consoleDiv.appendChild(line);
+        consoleDiv.scrollTop = consoleDiv.scrollHeight;
+        oldWarn.apply(console, arguments);
+      };
+      var oldError = console.error;
+      console.error = function(message) {
+        var consoleDiv = document.getElementById('console');
+        var line = document.createElement('div');
+        line.textContent = message;
+        consoleDiv.appendChild(line);
+        consoleDiv.scrollTop = consoleDiv.scrollHeight;
+        oldError.apply(console, arguments);
+      };
+
+    // Set server UUID and ID as global variables
+    window.serverUuid = '<%= @server_uuid %>';
+    window.serverId = '<%= @server_id %>';
+
+    console.log("Init script worked!")
+  </script>
+  <script type="module" src="<%= asset_path 'channels/console_channel.js' %>"></script>
+</body>

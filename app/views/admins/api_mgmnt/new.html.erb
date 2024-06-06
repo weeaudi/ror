@@ -1,0 +1,34 @@
+<!-- app/views/admins/api_mgmnt/new.html.erb -->
+<h1>Create New API Token</h1>
+
+<%= form_with model: @api_token, url: create_api_token_admins_api_mgmnt_index_path, local: true do |form| %>
+  <div>
+    <%= form.label :allowed_ips, "Allowed IPs" %>
+    <%= form.text_area :allowed_ips %>
+  </div>
+
+  <h2>Allowed Areas</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Area</th>
+        <th>Permission</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @areas.each do |area| %>
+  <%= form.fields_for :api_token_areas, @api_token.api_token_areas.build(area_id: area.id) do |area_fields| %>
+    <%= area_fields.hidden_field :area_id, value: area.id %>
+    <p>
+      <%= area.name %>
+      <%= area_fields.select :permission, options_for_select({ "Read/Write" => "ap_rw", "Read" => "ap_r", "None" => "ap_none" }), {}, class: "form-control" %>
+    </p>
+  <% end %>
+<% end %>
+    </tbody>
+  </table>
+
+  <div>
+    <%= form.submit "Create API Token" %>
+  </div>
+<% end %>

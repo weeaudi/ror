@@ -13,3 +13,32 @@
  *= require_tree .
  *= require_self
  */
+
+
+
+ /* app/assets/stylesheets/application.css */
+.flash-messages {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
+
+.flash {
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.flash.notice {
+  background-color: #dff0d8;
+  color: #3c763d;
+}
+
+.flash.alert {
+  background-color: #f2dede;
+  color: #a94442;
+}
+
