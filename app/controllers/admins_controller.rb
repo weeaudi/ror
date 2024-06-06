@@ -1,3 +1,5 @@
+@coderabbitai generate tests for this file
+
 class AdminsController < ApplicationController
 
   before_action :authenticate_token

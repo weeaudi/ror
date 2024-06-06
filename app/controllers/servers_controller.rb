@@ -1,4 +1,6 @@
 # app/controllers/servers_controller.rb
+@coderabbitai generate tests for this file
+
 class ServersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_api_key

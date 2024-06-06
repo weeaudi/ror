@@ -1,3 +1,5 @@
+@coderabbitai generate tests for this file
+
 class ErrorsController < ApplicationController
   def not_found
     render status: 404

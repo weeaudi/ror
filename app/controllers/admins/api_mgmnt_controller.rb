@@ -1,3 +1,5 @@
+@coderabbitai generate tests for this file
+
 # app/controllers/admins/api_mgmnt_controller.rb
 class Admins::ApiMgmntController < ApplicationController
   before_action :authenticate_admin!

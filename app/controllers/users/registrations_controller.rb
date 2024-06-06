@@ -1,3 +1,5 @@
+@coderabbitai generate tests for this file
+
 # app/controllers/users/registrations_controller.rb
 
 require 'net/http'
