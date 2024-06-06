@@ -1,5 +1,3 @@
-@coderabbitai generate tests for this file
-
 class ApplicationController < ActionController::Base
 
   def not_found(message: "Not Found")

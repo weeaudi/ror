@@ -1,5 +1,3 @@
-@coderabbitai generate tests for this file
-
 class PagesController < ApplicationController
 
   def index
