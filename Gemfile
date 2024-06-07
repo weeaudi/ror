@@ -42,6 +42,10 @@ gem "devise"
 
 gem "pg"
 
+gem "rubocop"
+
+gem "brakeman"
+
 gem "bundler-audit"
 
 gem 'dotenv-rails', groups: [:development, :test]
