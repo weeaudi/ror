@@ -2,6 +2,9 @@ source "https://rubygems.org"
 
 ruby "3.2.4"
 
+gem "actionpack", '7.1.3.4'
+gem "actiontext", '7.1.3.4'
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.3", ">= 7.1.3.3"
 
@@ -38,6 +41,8 @@ gem "bcrypt", "~> 3.1.7"
 gem "devise"
 
 gem "pg"
+
+gem "bundler-audit"
 
 gem 'dotenv-rails', groups: [:development, :test]
 
