@@ -5,17 +5,15 @@ require 'net/http'
 class Users::RegistrationsController < Devise::RegistrationsController
   def create
     super do |resource|
-      if resource.persisted? # Check if the user is successfully saved
-=begin        
+      if resource.persisted? # Check if the user is successfully saved    
         panel_user_id = create_panel_account(resource)
         if panel_user_id
           resource.update_column(:id, panel_user_id)
         else
           resource.destroy
-          puts @panel_error_message
+          flash[:alert] = @panel_error_message
           redirect_to new_user_registration_path and return
         end
-=end
       end
     end
   end
@@ -43,8 +41,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     response = http.request(request)
     response_body = JSON.parse(response.body)
-
-    puts response_body
 
     if response.is_a?(Net::HTTPSuccess)
       response_body['attributes']['id'] # Adjust based on the actual response structure

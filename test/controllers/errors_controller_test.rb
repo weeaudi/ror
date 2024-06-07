@@ -1,7 +1,12 @@
-require "test_helper"
+require 'rails_helper'
 
-class ErrorsControllerTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
+RSpec.describe ErrorsController, type: :controller do
+  describe "GET #not_found" do
+    it "returns a 404 status" do
+      get :not_found
+      expect(response.status).to eq(404)
+    end
+  end
+
+  # Add more tests for other actions here
 end
