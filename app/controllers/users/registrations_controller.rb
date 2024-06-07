@@ -5,7 +5,7 @@ require 'net/http'
 class Users::RegistrationsController < Devise::RegistrationsController
   def create
     super do |resource|
-      if resource.persisted? # Check if the user is successfully saved    
+      if resource.persisted? # Check if the user is successfully saved
         panel_user_id = create_panel_account(resource)
         if panel_user_id
           resource.update_column(:id, panel_user_id)
@@ -22,7 +22,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def create_panel_account(user)
     api_key = Rails.application.credentials.dig(:Us_RW)
-    url = URI("https://panel.inflames.cc/api/application/users")
+    url = URI('https://panel.inflames.cc/api/application/users')
 
     http = Net::HTTP.new(url.host, url.port)
     http.use_ssl = true
@@ -32,9 +32,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     user_data = {
       email: user.email,
-      username: "WebsiteUser" + user.id.to_s,
-      first_name: "WebsiteUser" + user.id.to_s,
-      last_name: "WebsiteUser" + user.id.to_s
+      username: 'WebsiteUser' + user.id.to_s,
+      first_name: 'WebsiteUser' + user.id.to_s,
+      last_name: 'WebsiteUser' + user.id.to_s
     }
 
     request.body = user_data.to_json

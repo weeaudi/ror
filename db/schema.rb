@@ -10,39 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_27_234124) do
-  create_table "api_token_areas", id: false, force: :cascade do |t|
-    t.integer "api_token_id"
-    t.integer "area_id"
-    t.integer "permission", default: 2
-    t.index ["api_token_id"], name: "index_api_token_areas_on_api_token_id"
-    t.index ["area_id"], name: "index_api_token_areas_on_area_id"
+ActiveRecord::Schema[7.1].define(version: 20_240_527_234_124) do
+  create_table 'api_token_areas', id: false, force: :cascade do |t|
+    t.integer 'api_token_id'
+    t.integer 'area_id'
+    t.integer 'permission', default: 2
+    t.index ['api_token_id'], name: 'index_api_token_areas_on_api_token_id'
+    t.index ['area_id'], name: 'index_api_token_areas_on_area_id'
   end
 
-  create_table "api_tokens", force: :cascade do |t|
-    t.string "token"
-    t.text "allowed_ips", default: "[]"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table 'api_tokens', force: :cascade do |t|
+    t.string 'token'
+    t.text 'allowed_ips', default: '[]'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
-  create_table "areas", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table 'areas', force: :cascade do |t|
+    t.string 'name'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "admin", default: false, null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  create_table 'users', force: :cascade do |t|
+    t.string 'email', default: '', null: false
+    t.string 'encrypted_password', default: '', null: false
+    t.string 'reset_password_token'
+    t.datetime 'reset_password_sent_at'
+    t.datetime 'remember_created_at'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.boolean 'admin', default: false, null: false
+    t.index ['email'], name: 'index_users_on_email', unique: true
+    t.index ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true
   end
-
 end

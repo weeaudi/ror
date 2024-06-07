@@ -7,11 +7,11 @@ headers = {
 }
 
 # Create a WebSocket client and connect
-ws = WebSocket::Client::Simple.connect url, headers: headers
+ws = WebSocket::Client::Simple.connect(url, headers:)
 
 # Handle the open event
 ws.on :open do
-  puts "Connected to the WebSocket server."
+  puts 'Connected to the WebSocket server.'
 end
 
 # Handle the message event

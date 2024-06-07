@@ -5,12 +5,12 @@ class ServersController < ApplicationController
 
   def index
     email = current_user.email
-    @servers = PanelApiInterface.find_all_servers(email: email, api_key: @api_key)
+    @servers = PanelApiInterface.find_all_servers(email:, api_key: @api_key)
   end
 
   def index_json
     email = current_user.email
-    servers = PanelApiInterface.find_all_servers(email: email, api_key: @api_key)
+    servers = PanelApiInterface.find_all_servers(email:, api_key: @api_key)
     render json: servers
   end
 
@@ -19,7 +19,7 @@ class ServersController < ApplicationController
     if server
       @server = server['attributes']
     else
-      not_found(message: "Server not found!")
+      not_found(message: 'Server not found!')
     end
   end
 
@@ -28,7 +28,7 @@ class ServersController < ApplicationController
     if server
       render json: server['attributes']
     else
-      not_found(message: "Server not found!")
+      not_found(message: 'Server not found!')
     end
   end
 
@@ -39,11 +39,9 @@ class ServersController < ApplicationController
       @server_id = server['attributes']['id']
       @token = generate_token
     else
-      not_found(message: "Server not found!")
+      not_found(message: 'Server not found!')
     end
   end
-
-  
 
   private
 
@@ -52,7 +50,7 @@ class ServersController < ApplicationController
   end
 
   def fetch_server(id)
-    servers = PanelApiInterface.find(id: id, api_key: @api_key)
+    servers = PanelApiInterface.find(id:, api_key: @api_key)
     servers.first
   end
 

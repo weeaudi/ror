@@ -37,8 +37,10 @@ jobs:
       - name: Set up database schema
         run: bin/rails db:schema:load
       # Add or replace test runners here
+      - name: List directory (DEBUG)
+        run: dir
       - name: Run tests
-        run: bundle exec rspec tests/controllers/* tests/controllers/*/*
+        run: bundle exec rspec ./tests/controllers/* ./tests/controllers/*/*
 
   lint:
     runs-on: ubuntu-latest
@@ -56,4 +58,4 @@ jobs:
         run: bundle exec brakeman -q -w2
       - name: Lint Ruby files
         run: bundle exec rubocop --parallel
-        
+

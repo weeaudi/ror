@@ -1,17 +1,17 @@
 class ErrorsController < ApplicationController
   def not_found
-    render status: 404
+    render status: :not_found
   end
- 
+
   def internal_server
-    render status: 500
+    render status: :internal_server_error
   end
- 
+
   def unprocessable
-    render status: 422
+    render status: :unprocessable_entity
   end
- 
+
   def unacceptable
-    render status: 406
+    render status: :not_acceptable
   end
- end
+end

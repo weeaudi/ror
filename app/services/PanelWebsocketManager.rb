@@ -6,14 +6,14 @@ class PanelWebsocketManager
   @connections = {}
 
   def self.connect_websocket(id)
-    puts "Starting websocket connection"
+    puts 'Starting websocket connection'
     server = fetch_server(id)
     if server
       server_uuid = server['attributes']['uuid']
       server_identifier = server['attributes']['identifier']
       setup_websocket_connection(server_uuid, server_identifier, id)
     else
-      not_found(message: "Server not found!")
+      not_found(message: 'Server not found!')
     end
   end
 
@@ -23,15 +23,15 @@ class PanelWebsocketManager
 
     token = generate_token(server_identifier)
 
-    ws = WebSocket::Client::Simple.connect(url, headers: headers)
+    ws = WebSocket::Client::Simple.connect(url, headers:)
     @connections[server_id] = ws
 
     ws.on :open do
-      puts "Websocket open"
+      puts 'Websocket open'
       auth_message = { event: 'auth', args: [token] }.to_json
       logs_message = { event: 'send logs', args: [] }.to_json
       ws.send(auth_message)
-      puts "Websocket auth sent"
+      puts 'Websocket auth sent'
       puts auth_message
       ws.send(logs_message)
     end
@@ -39,11 +39,13 @@ class PanelWebsocketManager
     ws.on :message do |msg|
       data = JSON.parse(msg.data)
       if data['event'] == 'console output'
-        ActionCable.server.broadcast "console_channel_#{server_uuid}", {event: "RC", args: [data['args'].first]}.to_json
+        ActionCable.server.broadcast "console_channel_#{server_uuid}",
+                                     { event: 'RC', args: [data['args'].first] }.to_json
       elsif data['event'] == 'jwt error'
         ws.close
       elsif data['event'] == 'stats'
-        ActionCable.server.broadcast "console_channel_#{server_uuid}", {event: "RS", args: [data['args'].first]}.to_json
+        ActionCable.server.broadcast "console_channel_#{server_uuid}",
+                                     { event: 'RS', args: [data['args'].first] }.to_json
       end
     end
 
@@ -58,7 +60,7 @@ class PanelWebsocketManager
 
   def self.send_command(command, server_id)
     if @connections[server_id]
-      command_json = {event: 'send command', args: [command]}.to_json
+      command_json = { event: 'send command', args: [command] }.to_json
       @connections[server_id].send(command_json)
     else
       Rails.logger.warn "No active WebSocket connection found for server ID: #{server_id}"
@@ -75,7 +77,7 @@ class PanelWebsocketManager
   end
 
   def self.fetch_server(id)
-    servers = PanelApiInterface.find(id: id, api_key: Rails.application.credentials.dig(:UsSe_R))
+    servers = PanelApiInterface.find(id:, api_key: Rails.application.credentials.dig(:UsSe_R))
     servers.first
   end
 
@@ -87,27 +89,23 @@ class PanelWebsocketManager
     http = Net::HTTP.new(url.host, url.port)
     http.use_ssl = true
     request = Net::HTTP::Get.new(url)
-    request["Authorization"] = "Bearer #{Rails.application.credentials.dig(:master_client_key)}"
-    request["Content-Type"] = "application/json"
+    request['Authorization'] = "Bearer #{Rails.application.credentials.dig(:master_client_key)}"
+    request['Content-Type'] = 'application/json'
 
     # Perform the HTTP request
     response = http.request(request)
 
     # Check if the request was successful
-    if response.is_a?(Net::HTTPSuccess)
-      data = JSON.parse(response.body)
-      puts data
-      token = data.dig("data", "token")
-      puts token
-      if token
-        return token
-      else
-        raise "Token not found in response: #{response.body}"
-      end
-    else
-      raise "Failed to fetch token: #{response.message} (#{response.code})"
-    end
-  rescue => e
+    raise "Failed to fetch token: #{response.message} (#{response.code})" unless response.is_a?(Net::HTTPSuccess)
+
+    data = JSON.parse(response.body)
+    puts data
+    token = data.dig('data', 'token')
+    puts token
+    return token if token
+
+    raise "Token not found in response: #{response.body}"
+  rescue StandardError => e
     Rails.logger.error "Error generating token: #{e.message}"
     raise e
   end
