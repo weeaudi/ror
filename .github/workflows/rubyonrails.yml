@@ -40,7 +40,7 @@ jobs:
       - name: List directory (DEBUG)
         run: dir
       - name: Run tests
-        run: bundle exec rspec ./tests/controllers/* ./tests/controllers/*/*
+        run: bundle exec rspec ./test/controllers/* ./test/controllers/*/*
 
   lint:
     runs-on: ubuntu-latest
