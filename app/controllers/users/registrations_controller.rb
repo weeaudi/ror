@@ -11,6 +11,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
           resource.update_column(:id, panel_user_id)
         else
           resource.destroy
+          flash[:alert] = @panel_error_message
           redirect_to new_user_registration_path and return
         end
       end
