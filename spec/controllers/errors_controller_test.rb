@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'spec/rails_helper'
 
 RSpec.describe ErrorsController, type: :controller do
   describe "GET #not_found" do
