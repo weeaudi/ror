@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
@@ -80,7 +82,7 @@ Rails.application.configure do
     port: 587,
     domain: 'outlook.com',
     user_name: 'aidenglen06@outlook.com',
-    password: Rails.application.credentials.dig(:mail_pass),
+    password: Rails.application.credentials[:mail_pass],
     authentication: :login,
     enable_starttls_auto: true
   }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'websocket-client-simple'
 
 # Define the WebSocket URL and any custom headers

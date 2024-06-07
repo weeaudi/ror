@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 # app/services/panel_api_interface.rb
 require 'net/http'
 require 'json'
 
 class PanelApiInterface
-  API_BASE_URL = 'https://panel.inflames.cc/api/application'.freeze
+  API_BASE_URL = 'https://panel.inflames.cc/api/application'
 
   def self.find(api_key:, email: nil, user_id: nil, name: nil, id: nil, identifier: nil)
     raise ArgumentError, 'API key is required.' if api_key.blank?

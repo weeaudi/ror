@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/controllers/servers_controller.rb
 class ServersController < ApplicationController
   before_action :authenticate_user!
@@ -46,7 +48,7 @@ class ServersController < ApplicationController
   private
 
   def set_api_key
-    @api_key = Rails.application.credentials.dig(:UsSe_R)
+    @api_key = Rails.application.credentials[:UsSe_R]
   end
 
   def fetch_server(id)

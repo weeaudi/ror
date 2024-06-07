@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/channels/console_channel.rb
 class ConsoleChannel < ApplicationCable::Channel
   def subscribed
@@ -21,7 +23,7 @@ class ConsoleChannel < ApplicationCable::Channel
   end
 
   def command(data)
-    puts "Received command: #{data}"
+    Rails.logger.debug "Received command: #{data}"
     PanelWebsocketManager.send_command(data['command'], @server_id)
   end
 

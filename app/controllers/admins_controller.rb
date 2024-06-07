@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AdminsController < ApplicationController
   before_action :authenticate_token
 
@@ -8,7 +10,7 @@ class AdminsController < ApplicationController
   def refresh
     uri = URI.parse('https://panel.inflames.cc/api/application/users')
     request = Net::HTTP::Get.new(uri)
-    request['Authorization'] = "Bearer #{Rails.application.credentials.dig(:UsSe_R)}"
+    request['Authorization'] = "Bearer #{Rails.application.credentials[:UsSe_R]}"
     request['Content-Type'] = 'application/json'
 
     response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == 'https') do |http|
@@ -27,12 +29,12 @@ class AdminsController < ApplicationController
 
         user.update(admin: root_admin)
         user.update(id: user_id) unless user.id == user_id
-        puts 'User: ' + user.id.to_s + '-' + user.email + ' updated!'
+        Rails.logger.debug "User: #{user.id}-#{user.email} updated!"
       end
 
       render json: { status: 'success', message: 'Admin statuses updated' }
     else
-      render json: { status: 'error', message: 'Failed to fetch users from API ' + response.code }, status: :bad_request
+      render json: { status: 'error', message: "Failed to fetch users from API #{response.code}" }, status: :bad_request
     end
   rescue StandardError => e
     render json: { status: 'error', message: e.message }, status: :internal_server_error
@@ -41,9 +43,8 @@ class AdminsController < ApplicationController
   private
 
   def authenticate_token
-    area = 'area_name'
-    token = params[:token]
-    permission = required_permission
+    params[:token]
+    required_permission
     ApiTokenManager.authenticate_api_token!('User Admin Refresh', 'ICWB_e2f9d2fcf0b2003b69d5a7a31d4072e242910498', 2)
   rescue StandardError => e
     render json: { error: e.message }, status: :unauthorized

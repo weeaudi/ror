@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApiTokenArea < ApplicationRecord
   self.primary_key = 'api_token_id'
   belongs_to :api_token

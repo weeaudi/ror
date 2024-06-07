@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/area.rb
 class Area < ApplicationRecord
   has_many :api_token_areas

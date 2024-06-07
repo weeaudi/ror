@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateApiTokenAreasJoinTable < ActiveRecord::Migration[7.1]
   def change
     create_table :api_token_areas, id: false do |t|

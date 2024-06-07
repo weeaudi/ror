@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'net/http'
 require 'uri'
 require 'json'
@@ -6,7 +8,7 @@ class PanelWebsocketManager
   @connections = {}
 
   def self.connect_websocket(id)
-    puts 'Starting websocket connection'
+    Rails.logger.debug 'Starting websocket connection'
     server = fetch_server(id)
     if server
       server_uuid = server['attributes']['uuid']
@@ -27,23 +29,24 @@ class PanelWebsocketManager
     @connections[server_id] = ws
 
     ws.on :open do
-      puts 'Websocket open'
+      Rails.logger.debug 'Websocket open'
       auth_message = { event: 'auth', args: [token] }.to_json
       logs_message = { event: 'send logs', args: [] }.to_json
       ws.send(auth_message)
-      puts 'Websocket auth sent'
-      puts auth_message
+      Rails.logger.debug 'Websocket auth sent'
+      Rails.logger.debug auth_message
       ws.send(logs_message)
     end
 
     ws.on :message do |msg|
       data = JSON.parse(msg.data)
-      if data['event'] == 'console output'
+      case data['event']
+      when 'console output'
         ActionCable.server.broadcast "console_channel_#{server_uuid}",
                                      { event: 'RC', args: [data['args'].first] }.to_json
-      elsif data['event'] == 'jwt error'
+      when 'jwt error'
         ws.close
-      elsif data['event'] == 'stats'
+      when 'stats'
         ActionCable.server.broadcast "console_channel_#{server_uuid}",
                                      { event: 'RS', args: [data['args'].first] }.to_json
       end
@@ -77,7 +80,7 @@ class PanelWebsocketManager
   end
 
   def self.fetch_server(id)
-    servers = PanelApiInterface.find(id:, api_key: Rails.application.credentials.dig(:UsSe_R))
+    servers = PanelApiInterface.find(id:, api_key: Rails.application.credentials[:UsSe_R])
     servers.first
   end
 
@@ -89,7 +92,7 @@ class PanelWebsocketManager
     http = Net::HTTP.new(url.host, url.port)
     http.use_ssl = true
     request = Net::HTTP::Get.new(url)
-    request['Authorization'] = "Bearer #{Rails.application.credentials.dig(:master_client_key)}"
+    request['Authorization'] = "Bearer #{Rails.application.credentials[:master_client_key]}"
     request['Content-Type'] = 'application/json'
 
     # Perform the HTTP request
@@ -99,9 +102,9 @@ class PanelWebsocketManager
     raise "Failed to fetch token: #{response.message} (#{response.code})" unless response.is_a?(Net::HTTPSuccess)
 
     data = JSON.parse(response.body)
-    puts data
+    Rails.logger.debug data
     token = data.dig('data', 'token')
-    puts token
+    Rails.logger.debug token
     return token if token
 
     raise "Token not found in response: #{response.body}"
