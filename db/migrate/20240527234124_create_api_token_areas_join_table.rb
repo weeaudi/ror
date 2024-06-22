@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# create the buffer between areas and apitokens
 class CreateApiTokenAreasJoinTable < ActiveRecord::Migration[7.1]
   def change
     create_table :api_token_areas, id: false do |t|

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# app/controllers/users/registrations_controller.rb
+# Controller to add users to the master panel
 
 require 'net/http'
 

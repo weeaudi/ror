@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# app/controllers/admins/api_mgmnt_controller.rb
+# Controller to handle api keys
 module Admins
   class ApiMgmntController < ApplicationController
     before_action :authenticate_admin!

@@ -84,6 +84,7 @@ class PanelWebsocketManager
     servers.first
   end
 
+  # rubocop:disable Metrics/MethodLength
   def self.generate_token(server_identifier)
     # API URL with the server identifier
     url = URI("https://panel.inflames.cc/api/client/servers/#{server_identifier}/websocket")
@@ -112,4 +113,5 @@ class PanelWebsocketManager
     Rails.logger.error "Error generating token: #{e.message}"
     raise e
   end
+  # rubocop:enable Metrics/MethodLength
 end

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# controller to refresh status of admins between panel and website
 class AdminsController < ApplicationController
   before_action :authenticate_token
 

@@ -4,3 +4,6 @@ require:
   - rubocop-rails
   - rubocop-rspec
   - rubocop-rspec_rails
+
+Metrics/BlockLength:
+  AllowedMethods: ['draw', 'configure']

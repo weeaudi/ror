@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# controller for custom error pages
 class ErrorsController < ApplicationController
   def not_found
     render status: :not_found

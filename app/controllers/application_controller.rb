@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# main controller to define special methods
 class ApplicationController < ActionController::Base
   def not_found(message: 'Not Found')
     Rails.logger.debug message

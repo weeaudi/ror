@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# app/controllers/servers_controller.rb
+# controller for managing servers
 class ServersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_api_key
